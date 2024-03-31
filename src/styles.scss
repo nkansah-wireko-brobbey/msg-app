@@ -3,6 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import 'ngx-toastr/toastr';
+
+
 @import './assets/scss/button';
 @import './assets/scss/form';
 
