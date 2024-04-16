@@ -1,3 +1,7 @@
+export const token = {
+    CURRENT_TOKEN: 'current_token',
+}
+
 const APIURL = 'http://localhost:4000'
 
 export const apiEndpoint = {
