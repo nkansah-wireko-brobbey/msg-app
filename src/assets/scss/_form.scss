@@ -12,3 +12,8 @@
 .form-control{
     @apply bg-gray-50 outline-none border-2 border-gray-300 rounded-lg focus:border-blue-600 w-full p-2.5 px-3.5;
 }
+
+.form-error{
+    @apply text-red-600 font-medium;
+
+}
