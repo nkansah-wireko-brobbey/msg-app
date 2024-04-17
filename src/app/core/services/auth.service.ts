@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Ilogin } from '../models/auth.model';
-import { apiEndpoint } from '../constants/constatns';
+import { apiEndpoint } from '../constants/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class AuthService {
   ) { }
 
   login(loginData: Ilogin){
-      this.http.post(`${apiEndpoint.authEndpoint.login}`, loginData)
+    return this.http.post(`${apiEndpoint.authEndpoint.login}`, loginData);
   }
 
   logout(){
