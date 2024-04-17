@@ -1,5 +1,5 @@
 export const constants = {
-    CURRENT_TOKEN: 'current_token',
+    CURRENT_TOKEN: 'CURRENT_TOKEN',
 }
 
 const APIURL = 'http://localhost:4000'

@@ -13,5 +13,5 @@ export interface Ilogin{
 export interface ILoginResponse{
     message: string;
     token: string;
-    user: IUser
+    data: IUser
 }

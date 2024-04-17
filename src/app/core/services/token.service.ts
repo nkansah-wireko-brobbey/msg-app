@@ -25,7 +25,7 @@ export class TokenService {
   }
 
   setToken(token: string){
-    localStorage.setItem(constants.CURRENT_TOKEN,'token');
+    localStorage.setItem(constants.CURRENT_TOKEN,token);
     this.updateToken(true)
   }
 
