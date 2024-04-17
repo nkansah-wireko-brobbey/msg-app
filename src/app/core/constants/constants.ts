@@ -1,4 +1,4 @@
-export const token = {
+export const constants = {
     CURRENT_TOKEN: 'current_token',
 }
 
