@@ -19,7 +19,7 @@
 
                 <div class="form-group mb-4">
                     <label for="password" class="form-label">Password <span>*</span> </label>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="password">
+                    <input type="password" name="password" id="password" class="form-control" placeholder="password" formControlName="password">
                     @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
                         <span class="form-error">Password is required</span>
                     }
