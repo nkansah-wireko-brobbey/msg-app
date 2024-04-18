@@ -4,6 +4,8 @@ import { MessagesComponent } from './pages/messages/messages.component';
 import { ComposeComponent } from './pages/compose/compose.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { guestGuard } from './core/guards/guest.guard';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -12,7 +14,8 @@ export const routes: Routes = [
         children:[
             {
                 path: '',
-                component: LoginComponent
+                component: LoginComponent,
+                canActivate: [guestGuard]
             },
             {
                 path: 'register',
@@ -21,7 +24,8 @@ export const routes: Routes = [
             ,
             {
                 path: 'messages', 
-                component: MessagesComponent
+                component: MessagesComponent,
+                canActivate: [authGuard]
             },
             {
                 path: 'compose',
