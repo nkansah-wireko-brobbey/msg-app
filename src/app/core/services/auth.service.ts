@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Ilogin, ILoginResponse } from '../models/auth.model';
 import { apiEndpoint } from '../constants/constants';
 import { TokenService } from './token.service';
-import { tap } from 'rxjs';
+import { map, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +26,14 @@ export class AuthService {
   }
 
   logout(){
+   return this.http.get(`${apiEndpoint.authEndpoint.logout}`).pipe(
+    map((response)=>{
+        if(response){
+          this.tokenService.removeToken();
+        }
+        return response;
+    })
+   )
 
   }
 }
