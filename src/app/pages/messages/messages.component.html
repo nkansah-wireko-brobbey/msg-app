@@ -10,12 +10,11 @@
                 </h4>
             </card-title>
             <card-body>
-                <div class="border-b border-gray-200">                    
-                    <app-message-item></app-message-item>
-                    <app-message-item></app-message-item>
-                    <app-message-item></app-message-item>
-                    <app-message-item></app-message-item>
-                    <app-message-item></app-message-item>
+                <div class="border-b border-gray-200">  
+                    @for (item of message$ | async; track $index) {
+                        <app-message-item [data]="item"></app-message-item>
+                    }                  
+               
                 </div>
             </card-body>
         </app-card>
