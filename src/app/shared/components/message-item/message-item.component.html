@@ -1,18 +1,18 @@
 <div class="py-4 px-2 font-bold hover:bg-gray-100 cursor-pointer border-t group">
     <div class="flex items-center">
         <div class="flex flex-1">
-            <span class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-gray-300">WN</span>
+            <span class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-gray-300">{{data.sender.name | nameInitials}}</span>
 
             <div class="ms-2 flex-1">
                 <div class="text-sm font-bold">
-                    Walter White
+                    {{data.sender.name}}
                 </div>
                 <div class="text-sm text-gray-500">
-                    This is a sample messge to checkout the design
+                   {{data.subject}}
                 </div>
             </div>
             <div class="inline-flex items-center text-xs text-gray-500">
-                3 days ago 
+                {{data.createdAt | dateAgo}}
             </div>
         </div>
         <div class="font-normal hidden group-hover:inline-flex mx-2">
