@@ -7,11 +7,12 @@ import { Select, Store } from '@ngxs/store';
 import { GetAllMessages, MessageState } from '../../store/MessageState';
 import { Observable } from 'rxjs';
 import { IMessage } from '../../core/models/common.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-messages',
   standalone: true,
-  imports: [CardComponent,SidebarComponent, MessageItemComponent],
+  imports: [CardComponent,SidebarComponent, MessageItemComponent,CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './messages.component.html',
   styleUrl: './messages.component.scss'
@@ -29,6 +30,8 @@ export class MessagesComponent implements OnInit{
 
  ngOnInit(): void {
     //  this.getAllMessages()
+
+    console.log("Message Here")
     this.message$.subscribe({
       next:(value)=>{
         if(!value.length){
