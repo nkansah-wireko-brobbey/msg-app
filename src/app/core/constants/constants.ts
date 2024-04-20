@@ -2,7 +2,7 @@ export const constants = {
     CURRENT_TOKEN: 'CURRENT_TOKEN',
 }
 
-const APIURL = 'https://msg-box-backend-pzrzz1prd-nkansah-wireko-brobbeys-projects.vercel.app/'
+const APIURL = 'https://msg-box-backend-pzrzz1prd-nkansah-wireko-brobbeys-projects.vercel.app'
 
 export const apiEndpoint = {
     authEndpoint: {
