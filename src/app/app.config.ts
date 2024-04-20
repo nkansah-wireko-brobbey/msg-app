@@ -9,11 +9,13 @@ import { httpInterceptor } from './core/interceptors/http.interceptor';
 import { routes } from './app.routes';
 import { NgxsModule } from '@ngxs/store';
 import { provideToastr } from 'ngx-toastr';
+import { MessageState } from './store/MessageState';
+import { UserState } from './store/UserState';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes), 
-    importProvidersFrom(NgxsModule.forRoot()), provideAnimations(),
+    importProvidersFrom(NgxsModule.forRoot([MessageState,UserState])), provideAnimations(),
     provideToastr({
       timeOut: 10000,
       positionClass: 'toast-top-right',
