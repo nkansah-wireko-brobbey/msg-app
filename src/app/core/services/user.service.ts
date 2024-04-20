@@ -14,6 +14,12 @@ export class UserService {
     private http: HttpClient
   ) { }
 
+  getLoggedInUser(): Observable<IApiResponse<IUser>>{
+      
+      return this.http.get<IApiResponse<IUser>>(`${apiEndpoint.UserEndpoint}/profile`);
+  
+    }
+
  getAllUsers() : Observable<IApiResponse<IUser[]>>{
 
    return this.http.get<IApiResponse<IUser[]>>(`${apiEndpoint.UserEndpoint}`);
