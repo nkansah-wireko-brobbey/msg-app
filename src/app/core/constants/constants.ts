@@ -10,9 +10,9 @@ export const apiEndpoint = {
         login: `${APIURL}/auth/login`,
         register: `${APIURL}/auth/register`,
         logout: `${APIURL}/auth/logout`,
-        profile: `${APIURL}/auth/profile`,
     },
     MessageEndpoint: `${APIURL}/message`,
     UserEndpoint: `${APIURL}/user`,
-    SocketEndpoint: `${APIURL}`
+    SocketEndpoint: `${APIURL}`,
+    ProfileEndpoint: `${APIURL}/profile`,
 }
