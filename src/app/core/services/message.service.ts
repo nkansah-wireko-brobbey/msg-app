@@ -20,8 +20,9 @@ export class MessageService {
     return this.http.get<IApiResponse<IMessage[]>>(apiEndpoint.MessageEndpoint);
   }
 
-  sendMessage(messageData: IMessage){
-    return this.http.post(`${apiEndpoint.MessageEndpoint}`,messageData)
+  sendMessage(messageData: IMessage):Observable<IApiResponse<IMessage>>{
+    console.log("Message Class",messageData)
+    return this.http.post<IApiResponse<IMessage>>(`${apiEndpoint.MessageEndpoint}`,messageData)
     .pipe(
       tap((res)=>{
           console.log(res)
