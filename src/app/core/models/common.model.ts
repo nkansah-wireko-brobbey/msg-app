@@ -14,3 +14,13 @@ export interface IMessage{
     status?: number;
     createdAt?: string;
 }
+
+
+export interface IMessageRequest{
+    to: string;
+    subject: string;
+    body: string;
+    sender: string;
+    status?: number;
+    createdAt?: string;
+}
