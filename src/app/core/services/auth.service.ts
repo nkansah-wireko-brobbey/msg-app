@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Ilogin, ILoginResponse } from '../models/auth.model';
+import { Ilogin, ILoginResponse, IRegister, IRegisterReponse } from '../models/auth.model';
 import { apiEndpoint } from '../constants/constants';
 import { TokenService } from './token.service';
 import { map, tap } from 'rxjs';
+import { SocketService } from './socket.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private socketService: SocketService
   ) { }
 
   login(loginData: Ilogin){
@@ -20,6 +22,7 @@ export class AuthService {
       tap((response)=>{
         if(response && response.data.token){
           this.tokenService.setToken(response.data.token)
+          this.socketService.socketID(response.data._id as string)
         }
       })
     )
@@ -36,4 +39,18 @@ export class AuthService {
    )
 
   }
+
+  register(registerData: IRegister){
+    return this.http.post<IRegisterReponse>(`${apiEndpoint.authEndpoint.register}`,registerData)
+      .pipe(
+        tap(
+          (response)=>{
+          if(response && response?.data.token){
+            this.tokenService.setToken(response.data.token)
+          }
+            }
+          )
+    )
+  }
+
 }
