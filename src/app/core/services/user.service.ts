@@ -16,7 +16,7 @@ export class UserService {
 
   getLoggedInUser(): Observable<IApiResponse<IUser>>{
       
-      return this.http.get<IApiResponse<IUser>>(`${apiEndpoint.UserEndpoint}/profile`);
+      return this.http.get<IApiResponse<IUser>>(`${apiEndpoint.ProfileEndpoint}`);
   
     }
 
