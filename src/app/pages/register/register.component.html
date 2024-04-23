@@ -1,23 +1,47 @@
-<div class="w-4/5">
-    <app-card>
+<div class="w-full flex justify-center">
+
+    <div class="w-4/5">
+        <app-card>
         <card-title>
             <h4 class="text-lg font-bold">Login here</h4>
         </card-title>
         <card-body>
-            <form action="">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
                 <div class="form-group mb-3">
                     <label for="" class="form-label">Your Name <span>*</span> </label>
-                    <input type="text" class="form-control" placeholder="Enter your name">
+                    <input type="text" class="form-control" placeholder="Enter your name" formControlName="name">
+                    @if (this.registerForm.get('name')?.hasError && this.registerForm.get('name')?.touched) {
+
+                        <span class="block form-error">Name is required</span>
+                    }
                 </div>
                 <div class="form-group mb-3">
                     <label for="" class="form-label">Email Address <span>*</span> </label>
-                    <input type="email" class="form-control" placeholder="Enter your email address">
+                    <input type="email" class="form-control" placeholder="Enter your email address" formControlName="email">
+                    @if (this.registerForm.get('email')?.hasError && this.registerForm.get('email')?.touched) {
+
+                        <span class="block form-error">Invalid email</span>
+                    }
                 </div>
 
                 <div class="form-group mb-3">
                     <label for="" class="form-label">Password <span>*</span> </label>
-                    <input type="password" class="form-control" placeholder="password">
+                    <input type="password" class="form-control" placeholder="password" formControlName="password">
+                    @if (this.registerForm.get('password')?.hasError && this.registerForm.get('password')?.touched) {
+
+                        <span class="block form-error">Password is required</span>
+                    }
+                </div>
+                <div class="form-group mb-3">
+                    <label for="" class="form-label">Confirm Password <span>*</span> </label>
+                    <input type="password" class="form-control" 
+                    placeholder="password" formControlName="confirmPassword">
+                    @if (registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.hasError && registerForm.get('confirmPassword')?.value !== registerForm.get('password')?.value) {
+
+                        <span class="block form-error">Password Mismatch</span>
+                    }
+                  
                 </div>
                 <button type="submit" class="btn btn-blue">
                     Register
@@ -25,4 +49,5 @@
             </form>
         </card-body>
     </app-card>
+</div>
 </div>
