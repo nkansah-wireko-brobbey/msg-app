@@ -11,24 +11,34 @@
             </card-title>
 
             <form [formGroup]="searchFormGroup" (ngSubmit)="onSubmit()">
-                <div class="form-group mb-3">
+                <div class="form-group mb-3"
+                
+                >
                     <label for="to" class="form-label">To</label>
                     <input type="email" id="to" name="to" class="form-control" placeholder="Enter recipient email address"
                     formControlName="to"
                     [value]="receipient.email"
+                    (input)="searchUsers($event)"
+                    
                     >
-                    <div class="w-full">
-                        <ul class="absolute rounded-md shadow z-10 bg-white" *ngIf="users$ | async as users">
-                            <li 
-                            class="p-2 ps-4 text-current text-sm font-semibold border-b hover:cursor-pointer hover:bg-slate-200"
-                             *ngFor="let item of users" (click)="setReceipient(item)"
-                             >{{item.name}}
+                    <!-- Suggestions -->
+                    <div class="w-full" #suggestionsList>
+                        @if (showSuggestions && (filteredUsers$ | async)) {
+
+                            <ul class="absolute rounded-md shadow z-10 bg-white" >
+                                <li 
+                                class="p-2 ps-4 text-current text-sm font-semibold border-b hover:cursor-pointer hover:bg-slate-200"
+                                *ngFor="let item of filteredUsers$ | async" (click)="setReceipient(item)"
+                                >{{item.name}} - <span class="font-thin">{{item.email}}</span>
+                                
                             </li>
                         </ul>
+                    }
+
+
                     </div>
                 </div>
 
-                <!-- Suggestions -->
 
                 <div class="form-group mb-3">
                     <label for="subject" class="form-label">Subject</label>

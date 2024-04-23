@@ -1,9 +1,9 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnDestroy, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnDestroy, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { CardComponent } from '../../shared/components/card/card.component';
 import { SidebarComponent } from '../../shared/layouts/sidebar/sidebar.component';
 import { Select, Store } from '@ngxs/store';
-import { GetAllUsers, UserState } from '../../store/UserState';
-import { Observable } from 'rxjs';
+import { GetAllUsers, GetLoggedInUser, UserState } from '../../store/UserState';
+import { Observable,map, of } from 'rxjs';
 import { IUser } from '../../core/models/auth.model';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -20,15 +20,27 @@ import { IMessage } from '../../core/models/common.model';
 })
 export class ComposeComponent implements OnInit, OnDestroy{
 
+  @ViewChild('suggestionsList', { static: true }) suggestionsList!: ElementRef;
+
+  senderId!: string;
+
+
   receipient: IUser = {
     email: '',
     name: '',
-    _id: ''
+    _id: '',
   };
 
   @Select(UserState.selectUsers) users$!: Observable<IUser[]>;
 
+  @Select(UserState.selectUser) loggedInUser$!: Observable<IUser>;
+
+  filteredUsers$!: Observable<IUser[]> ;
+
   searchFormGroup!: FormGroup ;
+
+  showSuggestions: boolean = false;
+
 
   constructor(
     private store: Store,
@@ -41,11 +53,22 @@ export class ComposeComponent implements OnInit, OnDestroy{
 
 
     this.store.dispatch(new GetAllUsers())
+    this.store.dispatch(new GetLoggedInUser())
 
     this.users$.subscribe({
       next:(value)=>{
         console.log(value)
       }
+    })
+
+    this.loggedInUser$.subscribe({
+      next:(value)=>{
+        console.log(value)
+        if(value){
+        this.senderId = value._id;
+        }
+      }
+    
     })
 
     this.searchFormGroup = this.fb.group({
@@ -63,23 +86,67 @@ export class ComposeComponent implements OnInit, OnDestroy{
  setReceipient(user: IUser){
       this.receipient = user;
       console.log(this.receipient)
+      this.searchFormGroup.patchValue({
+        to: user.email
+      })
+      this.hideSuggestionsList()
+
   }
 
-  onSearch(userStr : string){
+  searchUsers($event: any){
 
+    console.log($event.target.value)
+
+    this.showSuggestionsList()
+
+      this.filteredUsers$ = this.users$.pipe(
+        map((user)=>{
+          return user.filter((user)=> user.name.toLowerCase().includes($event.target.value.toLowerCase()))
+        })
+      )
+
+  }
+
+  hideSuggestionsList(){
+    this.showSuggestions = false;
+  }
+
+  showSuggestionsList(){
+    this.showSuggestions = true;
   }
 
   onSubmit(){
     if(this.searchFormGroup.valid){
       let messageData: any = this.searchFormGroup.value;
+
       messageData.to = this.receipient._id;
-        this.messageService.sendMessage(messageData);
+      messageData.sender = this.senderId;
+        this.messageService
+          .sendMessage(messageData)
+          .subscribe({
+            next: (res)=>{
+              console.log(res)
+              this.resetForm();
+            }
+          })
         
-      console.log(this.searchFormGroup.value)
     }else{
       this.searchFormGroup.markAllAsTouched();
-      console.log(this.searchFormGroup)
     }
   }
+
+  resetForm(){
+    this.searchFormGroup.reset();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    const isClickInside = this.suggestionsList.nativeElement.contains(target);
+    if (!isClickInside) {
+      this.hideSuggestionsList();
+    }
+  }
+  
 
 }
