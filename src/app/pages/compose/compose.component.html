@@ -10,21 +10,39 @@
                 </h4>
             </card-title>
 
-            <form action="">
+            <form [formGroup]="searchFormGroup" (ngSubmit)="onSubmit()">
                 <div class="form-group mb-3">
                     <label for="to" class="form-label">To</label>
-                    <input type="email" id="" name="" class="form-control" placeholder="Enter recipient email address">
+                    <input type="email" id="to" name="to" class="form-control" placeholder="Enter recipient email address"
+                    formControlName="to"
+                    [value]="receipient.email"
+                    >
+                    <div class="w-full">
+                        <ul class="absolute rounded-md shadow z-10 bg-white" *ngIf="users$ | async as users">
+                            <li 
+                            class="p-2 ps-4 text-current text-sm font-semibold border-b hover:cursor-pointer hover:bg-slate-200"
+                             *ngFor="let item of users" (click)="setReceipient(item)"
+                             >{{item.name}}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+
+                <!-- Suggestions -->
+
                 <div class="form-group mb-3">
-                    <label for="to" class="form-label">Subject</label>
-                    <input type="text" id="" name="" class="form-control" placeholder="Enter recipient email address">
+                    <label for="subject" class="form-label">Subject</label>
+                    <input type="text" id="subject" name="subject" class="form-control" placeholder="Enter subject"
+                    formControlName="subject"
+                    >
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="" class="form-label">Message <span>*</span></label>
-                    <textarea name="" id="" class="form-control" cols="30" rows="10" placeholder="Enter the message here!"></textarea>
+                    <label for="message" class="form-label">Message <span>*</span></label>
+                    <textarea id="message" name="message" class="form-control" rows="5" placeholder="Enter the message here!" formControlName="body"></textarea>
                 </div>
-                <button type="submit" class="btn  btn-roung btn-green w-full">Send Message</button>
+
+                <button type="submit" class="btn btn-round btn-green w-full">Send Message</button>
             </form>
             <card-body>
             </card-body>
