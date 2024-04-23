@@ -31,11 +31,11 @@ export class MessagesComponent implements OnInit, OnDestroy{
  ngOnInit(): void {
     //  this.getAllMessages()
 
+    this.store.dispatch(new GetAllMessages())
     console.log("Message Here")
     this.message$.subscribe({
       next:(value)=>{
         if(value.length){
-            this.store.dispatch(new GetAllMessages())
             console.log(value)
         }
         console.log('in here',value)
