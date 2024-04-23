@@ -14,6 +14,7 @@ import { UserState } from './store/UserState';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { apiEndpoint } from './core/constants/constants';
+import { notificationInterceptor } from './core/interceptors/notification.interceptor';
 
 const socketConfig: SocketIoConfig = {url: `${apiEndpoint.SocketEndpoint}`, options:{}}
 
@@ -29,6 +30,6 @@ export const appConfig: ApplicationConfig = {
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
-     provideHttpClient(withInterceptors([httpInterceptor, errorInterceptor]))
+     provideHttpClient(withInterceptors([httpInterceptor, errorInterceptor, notificationInterceptor]))
   ]
 };
