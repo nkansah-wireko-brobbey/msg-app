@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { apiEndpoint } from '../constants/constants';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { IApiResponse, IMessage } from '../models/common.model';
 import { HttpClient } from '@angular/common/http';
 
@@ -19,4 +19,14 @@ export class MessageService {
 
     return this.http.get<IApiResponse<IMessage[]>>(apiEndpoint.MessageEndpoint);
   }
+
+  sendMessage(messageData: IMessage){
+    return this.http.post(`${apiEndpoint.MessageEndpoint}`,messageData)
+    .pipe(
+      tap((res)=>{
+          console.log(res)
+      })
+    )
+  }
+
 }
