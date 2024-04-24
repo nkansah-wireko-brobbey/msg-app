@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Observable, tap } from 'rxjs';
+import { IMessage } from '../models/common.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class SocketService {
 
   public saveUserIdWithSocket(userId: string): void {
     // Send message to the server
-    this.socket.emit('save_userId', userId).subscribe();
+    this.socket.emit('save_userId', userId);
     console.log("Connect emmited")
   }
 
@@ -26,9 +27,9 @@ export class SocketService {
     );
   }
 
-  public listMessages() {
+  public newMesages():Observable<IMessage> {
         // List messages from the server
 
-    return this.socket.fromEvent('messages');
+    return this.socket.fromEvent('new_message');
   }
 }
