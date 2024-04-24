@@ -22,7 +22,6 @@ export class AuthService {
       tap((response)=>{
         if(response && response.data.token){
           this.tokenService.setToken(response.data.token)
-          this.socketService.socketID(response.data._id as string)
         }
       })
     )
