@@ -26,7 +26,7 @@ export class AppComponent {
     private tokenService: TokenService
   ) {
 
-    tokenService.isAuthenticated.subscribe({
+    this.tokenService.isAuthenticated.subscribe({
       next: (value) => {
         if(value){
           this.store.dispatch(new GetLoggedInUser())
