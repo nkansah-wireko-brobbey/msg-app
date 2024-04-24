@@ -3,9 +3,14 @@ import { IMessage } from "../core/models/common.model";
 import { Injectable } from "@angular/core";
 import { MessageService } from "../core/services/message.service";
 import { tap } from "rxjs";
+import { SocketService } from "../core/services/socket.service";
 
 export class GetAllMessages{
     static readonly type = '[Message] Get All';
+}
+
+export class GetNewMessage{
+    static readonly type = '[Message] Get New';
 }
 
 export interface MessageStateModel{
@@ -22,7 +27,7 @@ export interface MessageStateModel{
 @Injectable()
 export class MessageState{
 
-    constructor(private messageService: MessageService){
+    constructor(private messageService: MessageService,private socket: SocketService){
 
     }
 
@@ -40,6 +45,25 @@ export class MessageState{
 
             })
         )
+
+    }
+
+    @Action(GetNewMessage)
+    getNewMessage(ctx: StateContext<MessageStateModel>){
+
+        return this.socket.newMesages()
+            .pipe(
+                tap((res)=>{
+                    if(!res){
+                        return;
+                    }
+                    const state = ctx.getState();
+                    ctx.setState({
+                        ...state,
+                        messages: [...(state.messages || []), res]
+                    })
+                })
+            )
 
     }
 
