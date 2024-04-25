@@ -35,11 +35,7 @@ export const routes: Routes = [
                     {
                         path: 'all',
                         component: MessagesComponent
-                    },
-                    {
-                        path: 'inbox',
-                        component: MessagesComponent
-                    },
+                    },                   
                     {
                         path: 'sent',
                         component: MessagesComponent
