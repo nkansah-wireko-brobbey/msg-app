@@ -9,9 +9,11 @@
         </card-title>
         <card-body>
             <div class="flex flex-col gap-2">
-                <a routerLink="/messages" class="inline-flex bg-gray-50 hover:bg-gray-300 px-3.5 py-2 rounded-lg font-medium">Messages</a>
-                <a routerLink="" class="inline-flex bg-gray-50 hover:bg-gray-300 px-3.5 py-2 rounded-lg font-medium">Sent Messages</a>
-                <a routerLink="" class="inline-flex bg-gray-50 hover:bg-gray-300 px-3.5 py-2 rounded-lg font-medium">Trash Messages</a>
+                <a routerLink="/messages/all" routerLinkActive="active" class="inline-flex bg-gray-50 hover:shadow-sm px-3.5 py-2 rounded-lg font-medium">Messages</a>
+                <a routerLink="/messages/sent"
+                routerLinkActive="active"   class="inline-flex bg-gray-50 px-3.5 py-2 rounded-lg font-medium hover:shadow-sm">Sent Messages</a>
+                <a routerLink="/messages/trash"
+                routerLinkActive="active"  class="inline-flex bg-gray-50 px-3.5 py-2 rounded-lg font-medium hover:shadow-sm">Trash Messages</a>
             </div>
         </card-body>
 
