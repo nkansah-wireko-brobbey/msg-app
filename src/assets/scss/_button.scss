@@ -20,3 +20,6 @@
         @apply font-normal text-sm px-3 py-1.5;
     }
 }
+.active{
+    @apply border border-green-400 shadow-sm shadow-green-400 hover:shadow-md;
+}
