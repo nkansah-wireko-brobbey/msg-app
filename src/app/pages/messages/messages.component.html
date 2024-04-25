@@ -11,7 +11,7 @@
             </card-title>
             <card-body>
                 <div class="border-b border-gray-200">  
-                    @for (item of message$ | async; track $index) {
+                    @for (item of messageData$ | async; track $index) {
                         <app-message-item [data]="item"></app-message-item>
                     }                  
                
