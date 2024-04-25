@@ -25,7 +25,30 @@ export const routes: Routes = [
             {
                 path: 'messages', 
                 component: MessagesComponent,
-                canActivate: [authGuard]
+                canActivate: [authGuard],
+                children:[
+                    {
+                        path: '',
+                        redirectTo: 'all',
+                        pathMatch: 'full'
+                    },
+                    {
+                        path: 'all',
+                        component: MessagesComponent
+                    },
+                    {
+                        path: 'inbox',
+                        component: MessagesComponent
+                    },
+                    {
+                        path: 'sent',
+                        component: MessagesComponent
+                    },
+                    {
+                        path: 'trash',
+                        component: MessagesComponent
+                    }
+                ]
             },
             {
                 path: 'compose',
