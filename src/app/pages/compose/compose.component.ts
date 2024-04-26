@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MessageService } from '../../core/services/message.service';
 import { IMessage } from '../../core/models/common.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-compose',
@@ -45,7 +46,8 @@ export class ComposeComponent implements OnInit, OnDestroy{
   constructor(
     private store: Store,
     private fb: FormBuilder,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private activatedRoute: ActivatedRoute
   ){
 
   }
