@@ -17,12 +17,13 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   return next(req).pipe(
-    retry(2),
+    // retry(2),
     catchError((e: HttpErrorResponse)=>{
       if(e.status == 401){
         tokenService.removeToken()
         router.navigate([''])
       }
+      console.log(e)
 
       const error = e.error?.message || e.statusText;
       return throwError(()=> error)
