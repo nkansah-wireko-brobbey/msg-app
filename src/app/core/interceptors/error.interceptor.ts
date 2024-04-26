@@ -14,10 +14,11 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         errorMessage = `Error: ${error.error.message}`;
       } else {
         console.log(`Error Code: ${error.status}\nMessage: ${error.message}`)
-        errorMessage = `Message: ${error.message}`;
+        errorMessage = `Message: ${error.error.error.message}`;
+        console.log(error)
       }
       toastrService.error('Error', errorMessage);
-      return throwError(()=>errorMessage);
+      return throwError(()=>error);
 
     })
   )
