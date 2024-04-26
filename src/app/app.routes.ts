@@ -49,6 +49,10 @@ export const routes: Routes = [
             {
                 path: 'compose',
                 component: ComposeComponent
+            },
+            {
+                path: 'compose/:id',
+                component: ComposeComponent
             }
         ]
 
