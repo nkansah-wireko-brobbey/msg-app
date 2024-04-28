@@ -51,7 +51,7 @@ export const routes: Routes = [
                 component: ComposeComponent
             },
             {
-                path: 'compose/:id',
+                path: 'edit/:id',
                 component: ComposeComponent
             }
         ]
