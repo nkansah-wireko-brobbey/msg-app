@@ -4,7 +4,7 @@ import { SidebarComponent } from '../../shared/layouts/sidebar/sidebar.component
 import { MessageItemComponent } from '../../shared/components/message-item/message-item.component';
 import { Select, Store } from '@ngxs/store';
 import { GetAllMessages, GetNewMessage, MessageState } from '../../store/MessageState';
-import { Observable, of, switchMap } from 'rxjs';
+import { Observable, of, Subscription, switchMap } from 'rxjs';
 import { IMessage } from '../../core/models/common.model';
 import { CommonModule } from '@angular/common';
 import { FilterService } from '../../core/services/filter.service';
@@ -22,8 +22,11 @@ import { RouterModule } from '@angular/router';
 })
 export class MessagesComponent implements OnInit, OnDestroy{
 
+  messageSubscription: Subscription | undefined;
   @Select(MessageState.selectMessages) message$!: Observable<IMessage[]>;
 
+
+  messageDataSubsciption: Subscription | undefined;
   messageData$!: Observable<IMessage[]>;
 
  constructor(
@@ -39,7 +42,7 @@ export class MessagesComponent implements OnInit, OnDestroy{
 
     this.store.dispatch([new GetAllMessages(), new GetNewMessage()])
     console.log("Message Here")
-    this.message$.subscribe({
+   this.messageSubscription = this.message$.subscribe({
       next:(value)=>{
         if(value.length){
           this.messageData$ = this.message$
@@ -64,6 +67,9 @@ export class MessagesComponent implements OnInit, OnDestroy{
 
 
  ngOnDestroy(): void {
+
+  this.messageSubscription?.unsubscribe();
+  this.messageDataSubsciption?.unsubscribe();
 
   console.log("Destroy Run")
   
