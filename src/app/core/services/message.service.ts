@@ -30,4 +30,8 @@ export class MessageService {
     )
   }
 
+  getMessage(id: string):Observable<IApiResponse<IMessage>>{
+    return this.http.get<IApiResponse<IMessage>>(`${apiEndpoint.MessageEndpoint}/${id}`)
+  }
+
 }
