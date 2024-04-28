@@ -3,13 +3,14 @@ import { CardComponent } from '../../shared/components/card/card.component';
 import { SidebarComponent } from '../../shared/layouts/sidebar/sidebar.component';
 import { Select, Store } from '@ngxs/store';
 import { GetAllUsers, GetLoggedInUser, UserState } from '../../store/UserState';
-import { Observable,map, of } from 'rxjs';
+import { Observable,Subscription,map, of } from 'rxjs';
 import { IUser } from '../../core/models/auth.model';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MessageService } from '../../core/services/message.service';
 import { IMessage } from '../../core/models/common.model';
 import { ActivatedRoute } from '@angular/router';
+import { GetMessage, MessageState, ResetMessage } from '../../store/MessageState';
 
 @Component({
   selector: 'app-compose',
@@ -32,15 +33,23 @@ export class ComposeComponent implements OnInit, OnDestroy{
     _id: '',
   };
 
+  private usersSubscription: Subscription | undefined;
+  private loggedInUserSubscription: Subscription | undefined;
+  private editableMessageSubscription: Subscription | undefined;
+
   @Select(UserState.selectUsers) users$!: Observable<IUser[]>;
 
   @Select(UserState.selectUser) loggedInUser$!: Observable<IUser>;
+
+  @Select(MessageState.selectMessage) editableMessage$!: Observable<IMessage>;
 
   filteredUsers$!: Observable<IUser[]> ;
 
   searchFormGroup!: FormGroup ;
 
   showSuggestions: boolean = false;
+
+  paramMap: string | null = '';
 
 
   constructor(
@@ -53,17 +62,23 @@ export class ComposeComponent implements OnInit, OnDestroy{
   }
   ngOnInit(): void {
 
+    this.paramMap = this.activatedRoute.snapshot.paramMap.get('id');
+
+
+    console.log("This is the parameter: ",this.paramMap)
+
+
 
     this.store.dispatch(new GetAllUsers())
     this.store.dispatch(new GetLoggedInUser())
 
-    this.users$.subscribe({
+   this.usersSubscription = this.users$.subscribe({
       next:(value)=>{
         console.log(value)
       }
     })
 
-    this.loggedInUser$.subscribe({
+    this.loggedInUserSubscription = this.loggedInUser$.subscribe({
       next:(value)=>{
         console.log(value)
         if(value){
@@ -78,10 +93,34 @@ export class ComposeComponent implements OnInit, OnDestroy{
       subject: new FormControl('',[Validators.required]),
       body:new FormControl('',[Validators.required])
     })
+
+
+    if(this.paramMap){
+      this.store.dispatch(new GetMessage(this.paramMap))
+
+    }
+   this.editableMessageSubscription = this.editableMessage$
+    .subscribe({
+      next:(value)=>{
+        console.log("Editable message: ",value)
+        if(value){
+          this.searchFormGroup.patchValue({
+            to: value.sender.email,
+            subject: value.subject,
+            body: value.body
+          })
+        }
+    }})
+
   }
 
   ngOnDestroy(): void {
     
+    this.usersSubscription?.unsubscribe();
+    this.loggedInUserSubscription?.unsubscribe();
+    this.editableMessageSubscription?.unsubscribe();
+    this.resetForm();
+    this.store.dispatch(new ResetMessage())
     
   }
 
