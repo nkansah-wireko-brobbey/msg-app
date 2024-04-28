@@ -13,14 +13,25 @@ export class GetNewMessage{
     static readonly type = '[Message] Get New';
 }
 
+export class GetMessage{
+    static readonly type = '[Message] Get';
+    constructor(public id: string){}
+}
+
+export class ResetMessage{
+    static readonly type = '[Message] Reset';
+}
+
 export interface MessageStateModel{
-    messages: IMessage[] | undefined
+    messages: IMessage[] | undefined,
+    message: IMessage | undefined
 }
 
 @State<MessageStateModel>({
     name: 'Message',
     defaults:{
-        messages:[]
+        messages:[],
+        message: undefined
     }
 })
 
@@ -66,12 +77,40 @@ export class MessageState{
             )
 
     }
+    @Action(GetMessage)
+    getMessage(ctx: StateContext<MessageStateModel>, action: GetMessage){
+
+        return this.messageService.getMessage(action.id).pipe(
+            tap((res)=>{
+                console.log(res)
+                const state = ctx.getState();
+                ctx.setState({
+                    ...state,
+                    message: res.data
+                })
+            })
+
+        )
+    }
+
+    @Action(ResetMessage)
+    resetMessage(ctx: StateContext<MessageStateModel>){
+        const state = ctx.getState();
+        ctx.setState({
+            ...state,
+            message: undefined
+        })
+    }
 
     @Selector([MessageState])
     static selectMessages(state: MessageStateModel):IMessage[] | undefined{
         return state.messages;
     }
 
+    @Selector([MessageState])
+    static selectMessage(state: MessageStateModel):IMessage | undefined{
+        return state.message;
+    }
 
 
 }
