@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { IMessage } from '../../../core/models/common.model';
 import { DateAgoPipe } from '../../pipes/date-ago.pipe';
 import { NameInitialsPipe } from '../../pipes/name-initials.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-message-item',
@@ -12,10 +13,18 @@ import { NameInitialsPipe } from '../../pipes/name-initials.pipe';
 })
 export class MessageItemComponent {
 
+
+
   @Input() data!: IMessage;
 
-  constructor(){
+  constructor(
+    private router: Router
+  ){
     console.log(this.data)
+  }
+
+  openMessage(){
+    this.router.navigate(['/edit',this.data._id])
   }
 
 }
