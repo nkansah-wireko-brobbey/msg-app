@@ -3,6 +3,7 @@ import { IMessage } from '../../../core/models/common.model';
 import { DateAgoPipe } from '../../pipes/date-ago.pipe';
 import { NameInitialsPipe } from '../../pipes/name-initials.pipe';
 import { Router } from '@angular/router';
+import { ModalService } from '../../../core/services/modal.service';
 
 @Component({
   selector: 'app-message-item',
@@ -18,9 +19,16 @@ export class MessageItemComponent {
   @Input() data!: IMessage;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private modalService: ModalService
   ){
+  }
+
+  openMessageDetails(){
+    this.modalService.setModalData(this.data);
+    this.modalService.displayModal();
     console.log(this.data)
+
   }
 
   openMessage(){
