@@ -160,7 +160,7 @@ export class ComposeComponent implements OnInit, OnDestroy{
     if(this.searchFormGroup.valid){
       let messageData: any = this.searchFormGroup.value;
 
-      messageData.to = this.receipient._id;
+      messageData.to = this.receipient._id || this.searchFormGroup.get('to')?.value;
       messageData.sender = this.senderId;
         this.messageService
           .sendMessage(messageData)
