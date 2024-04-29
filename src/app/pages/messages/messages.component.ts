@@ -11,11 +11,12 @@ import { FilterService } from '../../core/services/filter.service';
 
 import { UrlService } from '../../core/services/url.service';
 import { RouterModule } from '@angular/router';
+import { ModalComponent } from '../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-messages',
   standalone: true,
-  imports: [CardComponent,SidebarComponent, MessageItemComponent,CommonModule,RouterModule],
+  imports: [CardComponent,SidebarComponent, MessageItemComponent,CommonModule,RouterModule, ModalComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './messages.component.html',
   styleUrl: './messages.component.scss'
