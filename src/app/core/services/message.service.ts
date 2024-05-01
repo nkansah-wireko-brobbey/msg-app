@@ -34,4 +34,8 @@ export class MessageService {
     return this.http.get<IApiResponse<IMessage>>(`${apiEndpoint.MessageEndpoint}/${id}`)
   }
 
+  deletMessage(id: string):Observable<IApiResponse<IMessage>>{
+    return this.http.delete<IApiResponse<IMessage>>(`${apiEndpoint.MessageEndpoint}/${id}`)
+  }
+
 }
