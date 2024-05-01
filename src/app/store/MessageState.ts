@@ -22,6 +22,11 @@ export class ResetMessage{
     static readonly type = '[Message] Reset';
 }
 
+export class DeleteMessage{
+    static readonly type = '[Message] Delete';
+    constructor(public id: string){}
+}
+
 export interface MessageStateModel{
     messages: IMessage[] | undefined,
     message: IMessage | undefined
