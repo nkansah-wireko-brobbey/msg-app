@@ -107,6 +107,19 @@ export class MessageState{
         })
     }
 
+    @Action(DeleteMessage)
+    deleteMessage(ctx: StateContext<MessageStateModel>, action: DeleteMessage){
+        return this.messageService.deletMessage(action.id).pipe(
+            tap((res)=>{
+                const state = ctx.getState();
+                ctx.setState({
+                    ...state,
+                    messages: state.messages?.filter((msg)=>msg._id !== action.id)
+                })
+            })
+        )
+    }
+
     @Selector([MessageState])
     static selectMessages(state: MessageStateModel):IMessage[] | undefined{
         return state.messages;
