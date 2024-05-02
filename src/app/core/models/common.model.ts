@@ -6,7 +6,7 @@ export interface IApiResponse<T>{
 }
 
 export interface IMessage{
-    _id?: string;
+    _id: string;
     to: IUser;
     subject: string;
     body: string;
