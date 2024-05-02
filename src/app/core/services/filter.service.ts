@@ -28,17 +28,15 @@ export class FilterService {
 
   public filterData(data: Observable<IMessage[]>, filter: string) {
 
-
-
     if (!this.filterCriteria(filter)) {
       return data;
     }
-    return this.filterCriteria(filter) === "trash" ? this.filterInTrash(data) : this.filterInSent(data);
+    return this.filterCriteria(filter) === "trash" ? this.filterInTrash(data) : this.filterCriteria(filter) ==="sent"? this.filterInSent(data): this.filterOutTrash(data);
   }
 
-  private filterCriteria(filter: string) : false | "trash" | "sent"{
+  private filterCriteria(filter: string) : false | "trash" | "sent" | "all"{
 
-    return filter === "trash" ? "trash" : filter === "sent" ? "sent" : false;
+    return filter === "trash" ? "trash" : filter === "sent" ? "sent" : filter === "all"?"all":false;
 
   }
 
@@ -60,5 +58,15 @@ export class FilterService {
         });
       }
     ))
+  }
+
+  private filterOutTrash(data: Observable<IMessage[]>){
+    return data.pipe(
+      map((res)=>{
+        return res.filter((item)=>{
+          return item.status !== 3
+        })
+      })
+    )
   }
 }
