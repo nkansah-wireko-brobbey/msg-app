@@ -15,7 +15,7 @@
                 {{data.createdAt | dateAgo}}
             </div>
         </div>
-        <div class="font-normal hidden group-hover:inline-flex mx-2 transition duration-500">
+        <div class="font-normal hidden group-hover:inline-flex mx-2 transition duration-500" (click)="deleteMessage($event, data._id)">
             <i class="ri-delete-bin-5-line ri-lg text-red-500 hover:animate-bounce"></i>
         </div>
     </div>
