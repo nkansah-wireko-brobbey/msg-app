@@ -114,7 +114,12 @@ export class MessageState{
                 const state = ctx.getState();
                 ctx.setState({
                     ...state,
-                    messages: state.messages?.filter((msg)=>msg._id !== action.id)
+                    messages: state.messages?.map((res)=>{
+                        if(res._id == action.id){
+                            res.status = 3;
+                        }
+                        return res;
+                    })
                 })
             })
         )
