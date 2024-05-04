@@ -51,6 +51,8 @@ export class ComposeComponent implements OnInit, OnDestroy{
 
   paramMap: string | null = '';
 
+  isSumbitActive: boolean = true;
+
 
   constructor(
     private store: Store,
@@ -159,6 +161,7 @@ export class ComposeComponent implements OnInit, OnDestroy{
   onSubmit(){
     if(this.searchFormGroup.valid){
       let messageData: any = this.searchFormGroup.value;
+      this.isSumbitActive = false;
 
       messageData.to = this.receipient._id || this.searchFormGroup.get('to')?.value;
       messageData.sender = this.senderId;
@@ -168,6 +171,11 @@ export class ComposeComponent implements OnInit, OnDestroy{
             next: (res)=>{
               console.log(res)
               this.resetForm();
+              this.isSumbitActive = true;
+            },
+            complete: ()=>{
+              console.log("Completed")
+              this.isSumbitActive = true;
             }
           })
         
