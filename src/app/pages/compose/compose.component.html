@@ -25,9 +25,9 @@
                     <div class="w-full" #suggestionsList>
                         @if (showSuggestions && (filteredUsers$ | async)) {
 
-                            <ul class="absolute rounded-md shadow z-10 bg-white" >
+                            <ul class="absolute rounded-md shadow z-10 bg-main" >
                                 <li 
-                                class="p-2 ps-4 text-current text-sm font-semibold border-b hover:cursor-pointer hover:bg-slate-200"
+                                class="p-2 ps-4 text-current text-sm font-semibold border-b border-main hover:cursor-pointer hover:opacity-80"
                                 *ngFor="let item of filteredUsers$ | async" (click)="setReceipient(item)"
                                 >{{item.name}} - <span class="font-thin">{{item.email}}</span>
                                 
@@ -52,7 +52,7 @@
                     <textarea id="message" name="message" class="form-control" rows="5" placeholder="Enter the message here!" formControlName="body"></textarea>
                 </div>
 
-                <button type="submit" class="btn btn-round btn-green w-full">Send Message</button>
+                <button type="submit" class="btn btn-round btn-blue w-full" [disabled]="isSumbitActive">Send Message</button>
             </form>
             <card-body>
             </card-body>
