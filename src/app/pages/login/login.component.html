@@ -1,14 +1,16 @@
-<div class="w-4/5">
-    <app-card>
+<div class="w-full flex items-center justify-center">
+    
+    <div class="w-4/5 md:w-2/5">
+        <app-card>
         <card-title>
             <h4 class="text-lg font-bold">Login here</h4>
         </card-title>
         <card-body>
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" autocomplete="off" novalidate>
 
                 <div class="form-group mb-4">
                     <label for="email" class="form-label">Email Address <span>*</span> </label>
-                    <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email address"
+                    <input type="email" name="new-email" id="email" class="form-control" autocomplete="new-email" placeholder="Enter your email address"
                     formControlName = "email"
                     >
                     @if (loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched) {
@@ -19,15 +21,16 @@
 
                 <div class="form-group mb-4">
                     <label for="password" class="form-label">Password <span>*</span> </label>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="password" formControlName="password">
+                    <input type="password" name="new-password" autocomplete="new-password" id="password" class="form-control" placeholder="password" formControlName="password">
                     @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
                         <span class="form-error">Password is required</span>
                     }
                 </div>
-                <button type="submit" class="btn btn-blue">
+                <button type="submit" class="btn btn-blue w-full mt-4">
                     Login
                 </button>
             </form>
         </card-body>
     </app-card>
 </div>
+    </div>
