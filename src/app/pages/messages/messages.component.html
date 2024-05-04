@@ -10,7 +10,7 @@
                 </h4>
             </card-title>
             <card-body>
-                <div class="border-b border-cyan-100">  
+                <div class="border-b border-main">  
                     @for (item of messageData$ | async; track $index) {
                         <app-message-item [data]="item"></app-message-item>
                     }                  
@@ -18,7 +18,7 @@
                     @if ((messageData$ | async)?.length === 0) {
                         <div class="flex justify-center flex-col items-center h-20 gap-2">
                             <p class="text-gray-400 font-semibold">No messages found</p>
-                    <a routerLink="/compose" class="p-2 border rounded-lg text-green-600 border-green-500 cursor-pointer hover:bg-green-50">
+                    <a routerLink="/compose" class="p-2 border rounded-lg text-green-600 border-green-500 cursor-pointer shadow-sm shadow-green-400 hover:opacity-70 transition-all">
                         Wanna send a message!
                     </a>
                         </div>
