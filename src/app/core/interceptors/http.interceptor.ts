@@ -25,7 +25,10 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
       }
       console.log(e)
 
-      const error = e.error?.message || e.statusText;
+
+        const error = (e.error.message)?e.error?.message : e.statusText;
+
+      
       return throwError(()=> error)
     })
   )
