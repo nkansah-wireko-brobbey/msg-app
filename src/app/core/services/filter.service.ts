@@ -54,7 +54,7 @@ export class FilterService {
     return data.pipe(
       map((res) => {
         return res.filter((item) => {
-          return item.sender._id === this.userId;
+          return item.sender._id === this.userId && item.status !== 3;
         });
       }
     ))
